@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Narwhal\Narwhal.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="datafiles\*" CopyToOutputDirectory="Always" LinkBase="datafiles\" />
+  </ItemGroup>
+
 </Project>
