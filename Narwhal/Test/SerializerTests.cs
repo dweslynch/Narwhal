@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Narwhal.Test;
 
 [TestClass]
-public class Tests
+public class SerializerTests
 {
     [TestMethod]
     public async Task TestImportExport()

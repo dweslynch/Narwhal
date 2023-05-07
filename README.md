@@ -2,10 +2,9 @@
 
 ## Project Structure
 
-This repo contains two projects:
+This project contains the classes that do the heavy lifting, and `Program.cs` defines a console app that we can use to implement those classes.
 
-* `Narwhal`, which contains the classes that do the heavy lifting, and compiles to a console app that we can use to implement them
-* `Narwhal.Test`, a unit testing project that tests the library code from the console app
+The `datafiles` directory contains the MNIST dataset for digit recognition, and the `Test` directory contains a suite of unit and integ tests.
 
 ## Required reading if you only know Java
 
@@ -20,7 +19,7 @@ First step is to [download .NET 7](https://dotnet.microsoft.com/en-us/download).
 
 ## Building and Running
 
-To run the acutal console app defined in `Program.cs`, cd to the Narwhal project directory and:
+To run the acutal console app defined in `Program.cs`, cd to the project directory and:
 
 ```
 dotnet run
@@ -30,10 +29,10 @@ You may need to run `dotnet build` first if your latest changes aren't being ref
 
 ## Unit Testing
 
-To run the test suite, cd into the `Narwhal.Test` project directory and run:
+To run the test suite, cd into the project directory and run:
 
 ```
 dotnet test
 ```
 
-Again, if latest changes aren't being reflected, first `dotnet build` the Narwhal project, then `dotnet test` the test project.
+Again, if latest changes aren't being reflected, first `dotnet build` the project, then `dotnet test`.
