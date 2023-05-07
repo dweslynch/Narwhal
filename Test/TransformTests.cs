@@ -17,15 +17,15 @@ public class TransformTests
         byte[] inputLayer = new byte[] { 255, 100 };
         float[,] weights = new float[,]
         {
-            { 0, 50 },  // Weights for the first and second input neuron respectively, to calculate the activation of the first output neuron
+            { 0, 500 },  // Weights for the first and second input neuron respectively, to calculate the activation of the first output neuron
             { -50, 1 }  // Weights to calculate the activation of the second output neuron
         };
-        short[] offsets = new short[] { 0, 12650 };     // Bias/Offset of the first and second output neuron, respectively
+        int[] offsets = new int[] { 0, 12650 };     // Bias/Offset of the first and second output neuron, respectively
 
         // Activation[out_0] = Squish(Activation[in_0] * Weight[out0, in_0] + Activation[in_1] * Weight[out_0, in_1] + Offset[out_0])
-        //                   = Squish(255              * 0                  + 100              * 50                  + 0            )
-        //                   = Squish(0                                     + 5000                                   + 0            )
-        //                   = Squish(5000)
+        //                   = Squish(255              * 0                  + 100              * 500                 + 0            )
+        //                   = Squish(0                                     + 50000                                  + 0            )
+        //                   = Squish(50000)
         //                   = 255
         // Activation[out_1] = Squish(Activation[in_0] * Weight[out1, in_0] + Activation[in_1] * Weight[out_1, in_1] + Offset[out_1])
         //                   = Squish(255              * -50                + 100              * 1                   + 12650        )
