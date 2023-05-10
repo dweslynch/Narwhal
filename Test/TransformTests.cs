@@ -6,10 +6,10 @@ namespace Narwhal.Test;
 public class TransformTests
 {
     [TestMethod]
-    public void TestSigmoidWithLowValue() => Assert.AreEqual(0, Transform.Squish(Double.MinValue));
+    public void TestSigmoidWithLowValue() => Assert.AreEqual(0, Transform.Wrap(Double.MinValue));
 
     [TestMethod]
-    public void TestSigmoidWithHighValue() => Assert.AreEqual(255, Transform.Squish(Double.MaxValue));
+    public void TestSigmoidWithHighValue() => Assert.AreEqual(255, Transform.Wrap(Double.MaxValue));
 
     [TestMethod]
     public void TestApplyTransformToLayer()

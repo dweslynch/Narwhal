@@ -18,7 +18,7 @@ public class Transform
 
     public delegate byte Wrapper(double input);
 
-    public static Wrapper Squish { get; set; } = (input) => (byte) ApplySigmoid(input, 255);
+    public static Wrapper Wrap { get; set; } = (input) => (byte) ApplySigmoid(input, 255);
 
     public Transform(float[,] weights, int[] offsets)
     {
@@ -27,6 +27,11 @@ public class Transform
 
         Weights = weights;
         Offsets = offsets;
+    }
+
+    public Transform(float[,] weights, int[] offsets, Wrapper wrapper) : this(weights, offsets)
+    {
+        Wrap = wrapper;
     }
 
     public ILayer ApplyTo(ILayer layer)
@@ -42,7 +47,7 @@ public class Transform
             outputIndex => {
                 // Compute the weighted sum of all activations in the input layer
                 double total = layer.Enumerated.Select((activation, inputIndex) => activation * Weights[outputIndex,inputIndex]).Sum();
-                result[outputIndex] = Squish(total + Offsets[outputIndex]);
+                result[outputIndex] = Wrap(total + Offsets[outputIndex]);
             }
         );
 
