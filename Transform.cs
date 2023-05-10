@@ -9,19 +9,24 @@ public class Transform
     private const int OUTPUT = 0;
     private const int INPUT = 1;
 
-    private float[,] weightv;
-    private int[] offsetv;
+    public float[,] Weights { get; set; }
 
-    public int InputSize => weightv.GetLength(INPUT);
-    public int OutputSize => weightv.GetLength(OUTPUT);
+    public int[] Offsets { get; set; }
+
+    public int InputSize => Weights.GetLength(INPUT);
+    public int OutputSize => Weights.GetLength(OUTPUT);
+
+    public delegate byte Wrapper(double input);
+
+    public static Wrapper Squish { get; set; } = (input) => (byte) ApplySigmoid(input, 255);
 
     public Transform(float[,] weights, int[] offsets)
     {
         if (weights.GetLength(0) != offsets.Length)
             throw new ArgumentException("Dimensionality Mismatch: The first dimension of the weight array match the size of the offset array");
 
-        weightv = weights;
-        offsetv = offsets;
+        Weights = weights;
+        Offsets = offsets;
     }
 
     public ILayer ApplyTo(ILayer layer)
@@ -36,10 +41,11 @@ public class Transform
         Parallel.For(0, OutputSize,
             outputIndex => {
                 // Compute the weighted sum of all activations in the input layer
-                double total = layer.Enumerated.Select((activation, inputIndex) => activation * weightv[outputIndex,inputIndex]).Sum();
-                result[outputIndex] = Squish(total + offsetv[outputIndex]);
+                double total = layer.Enumerated.Select((activation, inputIndex) => activation * Weights[outputIndex,inputIndex]).Sum();
+                result[outputIndex] = Squish(total + Offsets[outputIndex]);
             }
         );
+
         return new SimpleLayer(result);
     }
 
@@ -52,7 +58,4 @@ public class Transform
         var divisor = Math.Exp(-input / max) + 1.0;
         return (int) (max / divisor);
     }
-
-    // This needs to be `internal` instead of `private` so we can access it from our unit tests
-    internal static byte Squish(double input) => (byte) ApplySigmoid(input, 255);
 }
