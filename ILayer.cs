@@ -12,4 +12,6 @@ public interface ILayer
 
     // Provide an IEnumerable that we can run LINQ queries on
     public IEnumerable<byte> Enumerated { get; }
+
+    public bool IsTerminalLayer => false;
 }
